@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <style>
+        
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+            background-color: #86ac9b;
+        }
+
+        .container {
+            background-color: #F7F1EE;
+            padding: 20px 30px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        #studentForm p {
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        #studentForm input[type="text"],
+        #studentForm input[type="number"],
+        #studentForm select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #studentForm label {
+            margin-right: 10px;
+        }
+
+        #btn {
+            background-color: #394171;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+            font-weight: bold;
+        }
+
+        #btn:hover {
+            background-color: #545b94;
+        }
+
+        #studentTable {
+            border-collapse: collapse;
+            width: 90%;
+            max-width: 800px;
+            background-color: #F7F1EE;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        #studentTable th,
+        #studentTable td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #studentTable th {
+            background-color: #6d6b6b;
+            color: white;
+        }
+
+        .deleteBtn {
+            background-color: #394171;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .deleteBtn:hover {
+            background-color: #545b94;
+        }
+    
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>STUDENT DETAILS FORM</h2>
+        <div id="studentForm">
+            <p>Name:</p>
+            <input id="inputBox1" type="text" placeholder="Enter name">
+            <p>Age:</p>
+            <input id="inputBox2" type="number" placeholder="Enter age">
+            <p>Gender:</p>
+            <label>Male</label>
+            <input type="radio" name="gender" value="Male">
+            <label>Female</label>
+            <input type="radio" name="gender" value="Female">
+            <p>Course:</p>
+            <select id="opt">
+                <option value="">Select</option>
+                <option>Java</option>
+                <option>Python</option>
+                <option>Java Script</option>
+                <option>Web Development</option>
+                <option>Data Science</option>
+            </select>
+            <p>Email:</p>
+            <input id="inputBox3" type="text" placeholder="Enter email">
+            <br><br>
+            <button id="btn">Save</button>
+        </div>
+    </div>
+
+    <table id="studentTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Course</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        var inputBox1 = document.getElementById("inputBox1");
+        var inputBox2 = document.getElementById("inputBox2");
+        var inputBox3 = document.getElementById("inputBox3");
+        var opt = document.getElementById("opt");
+        var btn = document.getElementById("btn");
+        var table = document.getElementById("studentTable");
+        var tableBody = table.querySelector("tbody");
+
+        btn.addEventListener("click", function () {
+            var selectedGender = document.querySelector('input[name="gender"]:checked');
+            if (!inputBox1.value || !inputBox2.value || !selectedGender || !opt.value || !inputBox3.value) {
+                alert("Please fill in all the fields!");
+                return;
+            }
+
+            // Show the table on first valid save
+            table.style.display = "table";
+
+            var name = inputBox1.value;
+            var age = inputBox2.value;
+            var gender = selectedGender.value;
+            var course = opt.value;
+            var email = inputBox3.value;
+
+            var tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${name}</td>
+                <td>${age}</td>
+                <td>${gender}</td>
+                <td>${course}</td>
+                <td>${email}</td>
+                <td><button class="deleteBtn">Delete</button></td>`;
+
+            tr.querySelector(".deleteBtn").addEventListener("click", function () {
+                tr.remove();
+                // If no rows left, hide the table again
+                if (tableBody.children.length === 0) {
+                    table.style.display = "none";
+                }
+            });
+
+            tableBody.appendChild(tr);
+
+            // Clear form
+            inputBox1.value = "";
+            inputBox2.value = "";
+            inputBox3.value = "";
+            opt.value = "";
+            document.querySelectorAll('input[name="gender"]').forEach(input => input.checked = false);
+        });
+    </script>
+
+</body>
+
+</html>
