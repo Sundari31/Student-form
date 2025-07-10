@@ -37,5 +37,6 @@ This project is a simple web-based **Student Details Form** created using **HTML
 
 ## 🔗 Live Demo
 
-[Click here to view the live project] 🚀
+[Click here to view the live project]
+ https://sundari31.github.io/Student-form/🚀
 
